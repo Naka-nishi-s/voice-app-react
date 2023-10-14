@@ -19,6 +19,7 @@ const App = () => {
     // この場所に聞き取った結果が入る
     const speech = event.results[0][0].transcript;
     console.log(speech);
+    speak(speech);
   };
 
   // リッスンボタン押下時の処理
@@ -29,6 +30,19 @@ const App = () => {
     } else {
       recognition.stop();
     }
+  };
+
+  // PCが話す関数
+  const speak = (message) => {
+    // PCに話してもらうspeechを定義
+    const speech = new SpeechSynthesisUtterance(message);
+    speech.lang = "ja-JP";
+
+    // 既存のキューをキャンセル
+    window.speechSynthesis.cancel();
+
+    // speechの内容を話す
+    window.speechSynthesis.speak(speech);
   };
 
   return (
